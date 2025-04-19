@@ -256,7 +256,7 @@
 
     2. System produces specific recipe details page.
 
-    3. User is redirected to the specific recipe detils page.
+    3. User is redirected to the specific recipe details page.
 
 - **Primary Postconditions:** User is on the recipe details page.
 
