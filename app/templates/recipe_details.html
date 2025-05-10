@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>ILOVEFOOD</title>
+    {% endif %}
+</head>
+<body>
+    <!-- Display url to other pages -->
+    <nav>
+      <a href="{{ url_for('home') }}">Home</a> |
+      <a href="{{ url_for('new_recipe') }}">Add a Recipe</a> |
+      {% if current_user.is_anonymous %}
+      <a href="{{ url_for('login') }}">Login</a>
+      {% else %}
+      <a href="{{ url_for('show_recipes') }}">Your Recipes</a> |
+      <a href="{{ url_for('logout') }}">Logout</a>
+      {% endif %}
+    </nav>
+
+    <h1>Here Is The Recipe. Enjoy!</h1>
+
+    <!-- Recipe Title -->
+    <h3 style="text-align: center;">{{ recipe.title }}</h3>
+    
+    <!-- Description -->
+    <h3><b>Description</b></h3>
+    <p>{{ recipe.description }}</p>
+
+    <!-- Ingredients -->
+    <h3><b>Ingredients</b></h3>
+    <ul>
+        {% for ingredient in recipe.ingredients.splitlines() %}
+            {% if ingredient.strip() %}
+                <li>{{ ingredient.strip() }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    <!-- Instructions -->
+    <h3><b>Instructions</b></h3>
+    <ol>
+    {% for step in recipe.instructions.splitlines() %}
+        {% if step.strip() %}
+            <li>{{ step }}</li>
+        {% endif %}
+    {% endfor %}
+    </ol>
+
+    <p><b>Created:</b> {{ recipe.date_created }}</p>
+
+    <!-- Rating -->
+    <h3>Average Rating: {{ recipe.average_rating() }} / 5 stars</h3>
+    {% set user_rating = recipe.ratings | selectattr('user_id', 'equalto', current_user.id) | first %}
+    {% if user_rating %}
+        <p><em>You rated this recipe {{ user_rating.score }} star{% if user_rating.score != 1 %}s{% endif %}.</em></p>
+    {% else %}
+        <h3>What do you think? Rate Below!</h3>
+        <form action="" method="POST" novalidate>
+            {{ rating_form.hidden_tag() }}
+            <input type="hidden" name="form_type" value="rating">
+            <div class="star-rating">
+                {% for i in range(5, 0, -1) %}
+                    <input type="radio" id="star{{ i }}" name="score" value="{{ i }}" {% if rating_form.score.data == i %}checked{% endif %}>
+                    <label for="star{{ i }}" title="{{ i }} stars">★</label>
+                {% endfor %}
+            </div>
+            <br>
+            {{ rating_form.submit() }}
+            <!-- Rating Error Messages -->
+            {% for error in rating_form.score.errors %}
+                <span style="color: red;">[{{ error }}]</span><br>
+            {% endfor %}
+        </form>
+    {% endif %}
+
+    <!-- Comment Form -->
+    <h3>Post What You Think</h3>
+    <form method="POST" novalidate>
+        {{ comment_form.hidden_tag() }}
+        <input type="hidden" name="form_type" value="comment">
+        {{ comment_form.content() }}<br>
+        {{ comment_form.submit() }}
+    </form>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: green;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Error Messages -->
+    {% if comment_form.content.errors %}
+    <ul style="color: red;">
+        {% for error in comment_form.content.errors %}
+            {{ error }}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!-- Comments Section -->
+    <h3>Comments:</h3>
+    <ul>
+        {% for comment in recipe.comments %}
+            <li><strong>{{ comment.user.username }}</strong> says: {{ comment.content }}</li>
+        {% else %}
+            <li>No comments yet...</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Home</h1>
+
+    <!-- Tag Filter Form -->
+    <form method="POST" action="{{ url_for('home') }}">
+        <fieldset>
+            <legend>Filter by Tags:</legend>
+            {% for tag in tags %}
+                <label style="margin-right: 10px;">
+                    <input type="checkbox" name="tags" value="{{ tag.id }}"
+                           {% if tag.id in selected_tags %}checked{% endif %}>
+                    <span {% if tag.id in selected_tags %}style="font-weight: bold; color: #007bff;"{% endif %}>
+                        {{ tag.name }}
+                    </span>
+                </label>
+            {% endfor %}
+            <div style="margin-top: 10px;">
+                <button type="submit">Apply Filters</button>
+                {% if selected_tags %}
+                    <a href="{{ url_for('home') }}" style="margin-left: 10px;">Clear Filters</a>
+                {% endif %}
+            </div>
+        </fieldset>
+    </form>
+
+    <!-- Display Filtered Recipes or All Recipes -->
+    {% if filtered_recipes is not none %}
+        {% if filtered_recipes %}
+            <h3>Filtered Recipes</h3>
+            <ul>
+                {% for recipe in filtered_recipes %}
+                    <li>
+                        <a href="{{ url_for('show_recipe', integer=recipe.id) }}">{{ recipe.title }}</a>
+                        (by {{ recipe.user.username }})
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% else %}
+        {% if users %}
+            {% set ns = namespace(has_recipes=False) %}
+            {% for user in users %}
+                {% if user.recipes and user.recipes|length > 0 %}
+                    {% set ns.has_recipes = True %}
+                    <h3>{{ user.username }}'s Recipes</h3>
+                    <ul>
+                        {% for recipe in user.recipes %}
+                            <li>
+                                <a href="{{ url_for('show_recipe', integer=recipe.id) }}">{{ recipe.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+            {% if not ns.has_recipes %}
+                <p>There are currently no recipes</p>
+            {% endif %}
+        {% else %}
+            <p>There are currently no users with recipes</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

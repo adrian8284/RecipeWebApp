@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+    <!-- Search Results -->
+    {% if search_results is not none %}
+    <h3>Search Results</h3>
+    {% if search_results %}
+        <ul class="recipe-list">
+            {% for recipe in search_results %}
+                <li>
+                    <a href="{{ url_for('show_recipe', integer=recipe.id) }}">{{ recipe.title }}</a>
+                    <p>Ingredients: {{ recipe.ingredients | truncate(100) }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recipes found matching your search.</p>
+    {% endif %}
+    {% endif %}
+{% endblock %}

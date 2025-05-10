@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if recipes %}
+    <h1>Hello, here are your recipes!</h1>
+    {% for recipe in recipes %}
+        <div>
+            <ul>
+                <li>
+                    <a href="{{ url_for('show_recipe', integer=recipe.id) }}">{{ recipe.title }}</a>
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
+    {% else %}
+        <h1>Oh no! You have no recipes</h1>
+    {% endif %} 
+{% endblock %}

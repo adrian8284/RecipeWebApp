@@ -1,0 +1,85 @@
+/* Star Rating */
+.star-rating {
+    direction: rtl; 
+    text-align: left;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.star-rating input[type="radio"] {
+    display: none;
+}
+.star-rating label {
+    font-size: 28px;
+    color: #ddd;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 2px;
+    transition: color 0.2s;
+}
+.star-rating input[type="radio"]:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #f5b301; 
+}
+.star-rating label:hover ~ label,
+.star-rating input[type="radio"]:checked ~ label {
+    color: #f5b301;
+}
+
+/* Forms */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.form-field {
+    margin-bottom: 1.5rem;
+}
+.form-field label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    resize: vertical;
+}
+
+/* Error Messages */
+.error-message {
+    color: red;
+    display: block;
+}
+
+/* Tag Display */
+.tag-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.tag-checkboxes label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Nav Bar */
+.nav-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+.nav-contents {
+    padding: auto;
+}
+.search-form {
+    box-shadow: none;
+    margin-left: auto;
+}

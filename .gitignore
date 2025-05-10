@@ -1,0 +1,11 @@
+# Python virtual environment
+.venv/
+
+# Python compiled files
+app/__pycache__/
+
+# Database
+app/app.db
+
+# macOS junk
+.DS_Store

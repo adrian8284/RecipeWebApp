@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Sign In</h1>
+
+    <form action="" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+
+        <!-- Username Field Section -->
+        <div style="margin-bottom: 15px;">
+            {{ form.username.label }}
+            <br>
+            {{ form.username() }}
+
+            <!-- Display errors related to the username -->
+            {% for error in form.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+
+        <!-- Password Field Section -->
+        <div style="margin-bottom: 15px;">
+            <br>{{ form.password.label }}</br>
+            {{ form.password() }}
+
+            <!-- Display errors related to the password -->
+            {% for error in form.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+
+        <!-- Remember Me Checkbox Section -->
+        <div style="margin-bottom: 15px;">
+            {{ form.remember_me() }}
+            {{ form.remember_me.label }}
+        </div>
+
+        <!-- Submit Button Section -->
+        <div style="margin-bottom: 15px;">
+            {{ form.submit() }}
+        </div>
+
+        <!-- Registration Link for New Users -->
+        <div style="margin-top: 20px;">
+            <br>New User?</br>
+            <a href="{{ '/register' }}">Click to Register!</a>
+        </div>
+    </form>
+{% endblock %}

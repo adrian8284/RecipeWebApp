@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Enter your New Recipe</h2>
+    <form action="" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+
+        <!-- Title input field -->
+        <div class="form-field">
+            <label for="{{ form.title.id }}">{{ form.title.label }}</label>
+            {{ form.title() }}
+            {% for error in form.title.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <!-- Description input field -->
+        <div class="form-field">
+            <label for="{{ form.description.id }}">{{ form.description.label }}</label>
+            {{ form.description() }}
+            {% for error in form.description.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <!-- Ingredients input field -->
+        <div class="form-field">
+            <label for="{{ form.ingredients.id }}">{{ form.ingredients.label }}</label>
+            {{ form.ingredients() }}
+            {% for error in form.ingredients.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <!-- Instructions input field -->
+        <div class="form-field">
+            <label for="{{ form.instructions.id }}">{{ form.instructions.label }}</label>
+            {{ form.instructions() }}
+            {% for error in form.instructions.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <!-- Tags input field (as checkboxes) -->
+        <div class="form-field">
+            <label>{{ form.tags.label }}</label>
+            <div class="tag-checkboxes">
+                {% for value, label in form.tags.choices %}
+                    <label>
+                        <input type="checkbox" name="tags" value="{{ value }}"
+                               {% if form.tags.data and value in form.tags.data %}checked{% endif %}>
+                        {{ label }}
+                    </label>
+                {% endfor %}
+            </div>
+            {% for error in form.tags.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <!-- Submit button -->
+        <div>
+            {{ form.submit() }}
+        </div>
+    </form>
+{% endblock %}

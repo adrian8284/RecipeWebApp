@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>ILOVEFOOD</title>
+    {% endif %}
+
+</head>
+<body>
+    <!-- Display url to other pages -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-contents">
+                <a href="{{ url_for('home') }}">Home</a> |
+                <a href="{{ url_for('new_recipe') }}">Add a Recipe</a> |
+                
+                {% if current_user.is_anonymous %}
+                <a href="{{ url_for('login') }}">Login</a>
+                {% else %}
+                <a href="{{ url_for('show_recipes') }}">Your Recipes</a> |
+                <a href="{{ url_for('logout') }}">Logout</a>
+                {% endif %}
+            </div>
+
+            <form class="search-form" action="{{ url_for('search') }}" method="POST">
+                <label for="recipe">Search Recipe: </label>
+                <input type="text" name="user_input" placeholder="Enter recipe title or ingredient" >
+                <button type="submit">Search</button>
+            </form>
+      
+        </div>
+      </nav>
+      
+   
+   <hr>
+
+    <!-- Display flash messages -->
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: red;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
