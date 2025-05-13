@@ -12,16 +12,22 @@
 - Git 
 
 ### 1. Clone the Repository to local machine
-- git clone https://github.com/adrian8284/RecipeWebApp.git
-  
-### 2. Create a Virtual Environment
+git clone https://github.com/adrian8284/RecipeWebApp.git
+
+### 2. Change into directory
+cd RecipeWebApp 
+
+### 3. Create a Virtual Environment
 python3 -m venv .venv
 
-### 3. Activate the Virtual Environment
+### 4. Activate the Virtual Environment
 source .venv/bin/activate
 
-### 4. Install Dependencies
+### 5. Install Dependencies
 pip install -r requirements.txt
 
-### 5. Run the application 
-- python3 run.py
+### 6. Run the application 
+python3 run.py
+
+### 7. Go to link
+http://127.0.0.1:5000
