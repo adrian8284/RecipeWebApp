@@ -15,7 +15,7 @@
     17. Recipe Image API Integration  
 
 - **Irving Bautista**
-  - Functional Requirements:  
+  - Functional Requirements:
     1. User Registration
     2. User Login
     3. User Logout
