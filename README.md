@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Milestone 1: Food Recipe Web App
 - Adrian Agustin (@adrian8284)
 - Irving Bautista (@irving999)
@@ -16,17 +15,17 @@
 
 - **Irving Bautista**
   - Functional Requirements:
-1. User Registration
-2. User Login
-3. User Logout
-4. Create Recipe
-6. Delete Recipe
-7. View Recipe
-8. Search Recipe
-9. Filter Recipes
-10. Rate Recipe
-11. Comment on Recipe
-12. View All Recipes
+    1. User Registration
+    2. User Login
+    3. User Logout
+    4. Create Recipe
+    6. Delete Recipe
+    7. View Recipe
+    8. Search Recipe
+    9. Filter Recipes
+    10. Rate Recipe
+    11. Comment on Recipe
+    12. View All Recipes
 
 - **Adrian Agustin** – *UI Lead*
   - Functional Requirements:  
@@ -59,3 +58,6 @@ python3 run.py
 
 ### 7. Go to link
 http://127.0.0.1:5000
+
+# Presentation Video
+https://drive.google.com/file/d/1GMSllUZKLJpr42ZcrOXOa9y7VUR4zx95/view?usp=sharing
