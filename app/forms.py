@@ -77,4 +77,3 @@ class EditProfileForm(FlaskForm):
             user = db.session.scalar(sa.select(User).where(User.email == email.data))
             if user is not None:
                 raise ValidationError('Email already registered. Use a different email.')
-            
