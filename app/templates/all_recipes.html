@@ -7,6 +7,9 @@
       <li><strong>Username:</strong> {{ user.username }}</li>
       <li><strong>Email:</strong> {{ user.email }}</li>
     </ul>
+    <a href="{{ url_for('edit_profile') }}">
+      <button>Edit Profile</button>
+    </a>
     <hr> 
 
     <h2>Your Recipes</h2>
@@ -15,7 +18,7 @@
         <div>
             <ul>
                 <li>
-                    <a href="{{ url_for('show_recipe', integer=recipe.id) }}">{{ recipe.title }}</a>
+                  <a href="{{ url_for('show_recipe', integer=recipe.id) }}">{{ recipe.title }}</a>
                 </li>
             </ul>
         </div>
@@ -26,7 +29,7 @@
 
     <hr>
 
-   <h2>Favorite Recipes</h2>
+  <h2>Favorite Recipes</h2>
   {% if saved_recipes %}
     <ul>
       {% for recipe in saved_recipes %}
@@ -35,6 +38,7 @@
         </li>
       {% endfor %}
     </ul>
+
   {% else %}
     <p>You haven’t saved any recipes yet.</p>
   {% endif %}
