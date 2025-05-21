@@ -38,7 +38,7 @@
 
 ## Use Cases
 
-### 1. User Registration
+### 1. User Registration (Handled by: Irving Bautista)
 
 - **Summary:** A visitor can create an account by providing a username, email, and password.
 
@@ -78,7 +78,7 @@
 
     3. User remains on the form page, with only valid input preserved.
 
-### 2. User Login
+### 2. User Login (Handled by: Irving Bautista)
 
 - **Summary:** Registered users can log in using their email and password.
 
@@ -130,7 +130,7 @@
 
     9. User is now logged in and redirected to the logged in home page.
 
-### 3. User Logout
+### 3. User Logout (Handled by: Irving Bautista)
 
 - **Summary:** Logged-in users can log out of their account securely.
 
@@ -150,7 +150,7 @@
 
 - **Alternate Sequence:** N/A
 
-### 4. Create Recipe
+### 4. Create Recipe (Handled by: Irving Bautista)
 
 - **Summary:** Logged-in users can add new recipes with title, description, ingredients, and instructions.
 
@@ -182,7 +182,7 @@
 
     3. User remains on the form page, with input preserved.
 
-### 5. Edit Recipe
+### 5. Edit Recipe (Handled by: Adrian Agustin)
 
 - **Summary:** Users can update their own recipes after creation.
 
@@ -214,7 +214,7 @@
 
     3. User remains on the form page, with input preserved.
 
-### 6. Delete Recipe
+### 6. Delete Recipe (Handled by: Irving Bautista)
 
 - **Summary:** Users can delete their own recipes.
 
@@ -242,7 +242,7 @@
     
     2. User remains on the recipe page.
 
-### 7. View Recipe
+### 7. View Recipe (Handled by: Irving Bautista)
 
 - **Summary:** Anyone can view the details of a recipe including ingredients and instructions.
 
@@ -262,7 +262,7 @@
 
 - **Alternate Sequence:** N/A
 
-### 8. Search Recipe
+### 8. Search Recipe (Handled by: Irving Bautista)
 
 - **Summary:** Users can search recipes by title or ingredient keywords.
 
@@ -296,7 +296,7 @@
 
     3. User then clicks submit
 
-### 9. Rate Recipe
+### 9. Rate Recipe (Handled by: Irving Bautista)
 
 - **Summary:** Users can rate a recipe from 1 to 5 stars.
 
@@ -332,7 +332,7 @@
 
     3. The overall rating is updated
 
-### 10. Comment on Recipe
+### 10. Comment on Recipe (Handled by: Irving Bautista)
 
 - **Summary:** Users can leave comments on a recipe.
 
@@ -368,7 +368,7 @@
 
     3. User can try again
 
-### 11. View All Recipes
+### 11. View All Recipes (Handled by: Irving Bautista)
 
 - **Summary:** Homepage or main recipe list shows all recipes available in the database.
 
@@ -398,7 +398,7 @@
 
     2. The page displays a message informing the user
 
-### 12. Filter Recipes
+### 12. Filter Recipes (Handled by: Irving Bautista)
 
 - **Summary:** Users can filter recipes by tags like 'vegan', 'dessert', etc.
 
@@ -432,7 +432,7 @@
 
     3. User can clear filters or select a different combination of filters
 
-### 13. View User Profile
+### 13. View User Profile (Handled by: Kirill Vladimirov)
 
 - **Summary:** Users can view their own profile, including their submitted recipes.
 
@@ -460,7 +460,7 @@
 
     5. If user has no recipes, "No recipes yet. Add your first one!" message is displayed instead.
 
-### 14. Edit User Profile
+### 14. Edit User Profile (Handled by: Kirill Vladimirov)
 
 - **Summary:** Users can update their username, email, or password.
 
@@ -498,7 +498,7 @@
 
 
 
-### 15. Save Recipe (Favorites)
+### 15. Save Recipe (Favorites) (Handled by: Kirill Vladimirov)
 
 - **Summary:** Users can save or 'favorite' recipes for quick access later.
 
@@ -532,7 +532,7 @@
 
     - DB is updated with the user's saved recipe.
 
-### 16. Spit Out Recipes Based on Ingredients
+### 16. Spit Out Recipes Based on Ingredients (Handled by: Kirill Vladimirov)
 
 - **Summary:** Suggest recipes based on user's available ingredients.
 
@@ -578,7 +578,7 @@
 
     2. System displays "No recipes found with the provided ingredients. Try to enter different ingredients."
 
-### 17. Recipe Image API Integration
+### 17. Recipe Image API Integration (Handled by: Kirill Vladimirov)
 
 - **Summary:** Use an external API to get and display images for recipes.
 
@@ -616,7 +616,7 @@
 
     2. System uses default image.
 
-### 18. Trending Now
+### 18. Trending Now (Handled by: Adrian Agustin)
 
 - **Summary:** Users can view some of the most viewed recipes
 

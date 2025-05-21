@@ -170,3 +170,26 @@ def new_recipe():
         flash('Recipe created!', 'success')
         return redirect("/")
     return render_template("new_recipe.html", form=form)
+
+@myapp_obj.route("/recipe/edit/<int:recipe_id>", methods=['GET', 'POST'])
+@login_required
+def edit_recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    if recipe.user_id != current_user.id:
+        flash("You are not authorized to edit this recipe.", "danger")
+        return redirect(url_for("show_recipes"))
+
+    form = RecipeForm(obj=recipe)
+
+    if form.validate_on_submit():
+        recipe.title = form.title.data
+        recipe.description = form.description.data
+        recipe.ingredients = form.ingredients.data
+        recipe.instructions = form.instructions.data
+        selected_tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
+        recipe.tags = selected_tags
+        db.session.commit()
+        flash("Recipe updated successfully!", "success")
+        return redirect(url_for("show_recipe", integer=recipe.id))
+
+    return render_template("new_recipe.html", form=form, active_page="new_recipe")
