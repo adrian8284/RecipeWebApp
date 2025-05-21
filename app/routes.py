@@ -7,12 +7,13 @@ from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 from urllib.parse import urlsplit
 
-# Shows current user, if logged in, recipes
-@myapp_obj.route("/recipes")
+# If logged in, shows current user's profile information, their recipes and saved recipes
+@myapp_obj.route("/profile")
 @login_required
 def show_recipes():
     recipes = Recipe.query.filter_by(user_id=current_user.id).all()
-    return render_template("all_recipes.html", recipes=recipes)
+    saved_recipes = current_user.saved_recipes
+    return render_template("all_recipes.html", user=current_user, recipes=recipes, saved_recipes = saved_recipes)
 
 # Shows all users and their recipe regardless if logged in or not
 @myapp_obj.route("/")
@@ -87,6 +88,17 @@ def show_recipe(integer):
         db.session.commit()
         flash('Rating submitted!')
         return redirect(url_for('show_recipe', integer=recipe.id))
+    
+    if request.method == "POST" and request.form.get("form_type") == "save_toggle":
+        if recipe in current_user.saved_recipes:
+            current_user.saved_recipes.remove(recipe)
+            flash("Recipe removed from favorites!")
+        else:
+            current_user.saved_recipes.append(recipe)
+            flash("Recipe added to favorites!")
+        db.session.commit()
+        return redirect(url_for('show_recipe', integer=recipe.id))
+
     return render_template("recipe_details.html", recipe=recipe, 
                            comment_form=comment_form, rating_form=rating_form)
 
