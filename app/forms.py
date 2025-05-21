@@ -40,7 +40,7 @@ class RatingForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=4, max=35)])
     password2 = PasswordField("Re-Enter Password", validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
     
@@ -60,7 +60,7 @@ class RegistrationForm(FlaskForm):
 class EditProfileForm(FlaskForm):
     username = StringField('New Username')
     email = StringField('New Email', validators=[Optional(), Email()])
-    password = PasswordField('New Password')
+    password = PasswordField('New Password', validators=[Length(min=4, max=35)])
     password2 = PasswordField("Re-Enter New Password", validators=[EqualTo('password', message='Passwords must match')])
     submit = SubmitField('Update Profile')
 
