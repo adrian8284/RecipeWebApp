@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectMultipleField
-from wtforms.validators import Email, EqualTo, DataRequired, Length, ValidationError, NumberRange
+from flask_login import current_user
+from wtforms.validators import Email, EqualTo, DataRequired, Length, ValidationError, NumberRange, Optional
 import sqlalchemy as sa
 from app import db
 from app.models import User, Tag
@@ -54,3 +55,25 @@ class RegistrationForm(FlaskForm):
         user = db.session.scalar(sa.select(User).where(User.email == email.data))
         if user is not None:
             raise ValidationError('Email already registered. Use a different email.')
+
+
+class EditProfileForm(FlaskForm):
+    username = StringField('New Username')
+    email = StringField('New Email', validators=[Optional(), Email()])
+    password = PasswordField('New Password')
+    password2 = PasswordField("Re-Enter New Password", validators=[EqualTo('password', message='Passwords must match')])
+    submit = SubmitField('Update Profile')
+
+    # Validates username to check if it already exists
+    def validate_username(self, username):
+        if username.data and username.data != current_user.username:
+            user = db.session.scalar(sa.select(User).where(User.username == username.data))
+            if user is not None:
+                raise ValidationError('Username already taken')
+            
+    # Validates email to check if it already exists
+    def validate_email(self, email):
+        if email.data and email.data != current_user.email:
+            user = db.session.scalar(sa.select(User).where(User.email == email.data))
+            if user is not None:
+                raise ValidationError('Email already registered. Use a different email.')

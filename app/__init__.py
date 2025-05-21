@@ -21,4 +21,18 @@ myapp_obj.config.from_mapping(
 # Initialize the database
 db = SQLAlchemy(myapp_obj)
 
+# Import models
+from app.models import User, Recipe, Comment, Rating, Tag
+
+# Initialize database and tags
+with myapp_obj.app_context():
+    db.create_all()
+    # Populate tags 
+    tags = ['dessert', 'gluten-free', 'breakfast', 'dinner', 'lunch', 'quick', 'healthy', 'spicy']
+    for tag_name in tags:
+        if not Tag.query.filter_by(name=tag_name).first():
+            tag = Tag(name=tag_name)
+            db.session.add(tag)
+    db.session.commit()
+
 from app import routes, models

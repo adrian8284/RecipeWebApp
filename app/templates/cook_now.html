@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Cook Now</h2>
+<p>Enter the ingredients you have to get recipes you can cook!</p>
+<!-- Search Form -->
+<form method="POST" novalidate>
+  <label for="ingredients">Ingredients (comma separated - e.g. egg, bread, butter):</label><br>
+  <input type="text" name="ingredients" size="64"><br><br>
+  <label for="max_missing">Max missing ingredients:</label><br>
+  <input type="number" name="max_missing" value="3"><br><br>
+  <button type="submit">Find Recipes</button>
+</form>
+
+<hr>
+
+<!-- Matched Recipes -->
+<h2>Recipes you can cook now:</h2>
+{% if matched_recipes %}
+<ul>
+    {% for recipe, matched in matched_recipes %}
+    <li>
+        <a href="{{ url_for('show_recipe', integer=recipe.id) }}">{{ recipe.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>No perfect matches found.</p>
+{% endif %}
+
+<hr>
+
+<!-- Close Recipes -->
+<h2>Recipes you can almost cook:</h2>
+{% if close_recipes %}
+<ul>
+    {% for recipe, matched, missing_ingredients in close_recipes %}
+        <li>
+            <a href="{{ url_for('show_recipe', integer=recipe.id) }}">{{ recipe.title }}</a>
+            - {{ missing_ingredients | length }} Ingredient(s) Missing:
+        </li>
+        <ul>
+            {% for ing in missing_ingredients %}
+            <li>{{ ing }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>No close matches found.</p>
+{% endif %}
+
+{% endblock %}

@@ -58,37 +58,31 @@
 
     - Roles assigned, file structure created, team is clear on direction.
 
----
-
-### 2025-04-25 at 16:00
-
-- **Attendees:**
-
-- **Team Updates:**
-
-- **Pair-Programming:**
-
-- **Progress Summary:**
-
-### 2025-05-02 at 16:00
-
-- **Attendees:**
-
-- **Team Updates:**
-
-- **Pair-Programming:**
-
-- **Progress Summary:**
 
 ---
 
-### 2025-05-09 at 16:00
+### 2025-05-12 at 18:00 (Discord Call, 1.5 hour)
 
-- **Attendees:**
+- **Attendees:** Kirill, Adrian, Irving
 
 - **Team Updates:**
 
+	- Milestone 1 and 2 revisions due by 5/13.
+	- Milestone 3 due today (5/13); revisions due by 5/20.
+	- Project Contributions due today.
+	- All members reminded to complete at least one push/pull to GitHub.
+
+- **Discussion Summary:**
+
+    - Team caught up on current progress and deadlines.
+    - Clarified deliverables and expectations for each milestone and revision.
+    - Reviewed the full list of functional requirements.
+    - Clarified implementation responsibilities among team members.
+
 - **Pair-Programming:**
+
+    - N/A
 
 - **Progress Summary:**
 
+    - Irving implemented initial functional requirements (1–4, 6–12).

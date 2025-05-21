@@ -3,7 +3,6 @@
 {% block content %}
 <h1 class="mb-4">Here Is The Recipe. Enjoy!</h1>
 
-
 <h3 class="text-center">{{ recipe.title }}</h3>
 {% if recipe.user_id == current_user.id %}
   <div class="text-center mb-3">
@@ -56,6 +55,16 @@
         {% endfor %}
     </form>
 {% endif %}
+
+<h3>Like it? Add to your favorites!</h3>
+<form method="POST" class="mb-4">
+    <input type="hidden" name="form_type" value="save_toggle">
+    {% if recipe in current_user.saved_recipes %}
+        <button type="submit" class="btn btn-outline-danger">Unsave Recipe</button>
+    {% else %}
+        <button type="submit" class="btn btn-outline-primary">Save Recipe</button>
+    {% endif %}
+</form>
 
 <h3>Post What You Think</h3>
 <form method="POST" novalidate>

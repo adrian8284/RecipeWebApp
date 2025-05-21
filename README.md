@@ -12,7 +12,6 @@
     14. Edit User Profile  
     15. Save Recipe (Favorites)  
     16. Spit Out Recipes Based on Ingredients  
-    17. Recipe Image API Integration  
 
 - **Irving Bautista**
   - Functional Requirements:
