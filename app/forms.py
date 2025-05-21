@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectMultipleField
 from flask_login import current_user
-from wtforms.validators import Email, EqualTo, DataRequired, Length, ValidationError, NumberRange
+from wtforms.validators import Email, EqualTo, DataRequired, Length, ValidationError, NumberRange, Optional
 import sqlalchemy as sa
 from app import db
 from app.models import User, Tag
@@ -59,7 +59,7 @@ class RegistrationForm(FlaskForm):
 
 class EditProfileForm(FlaskForm):
     username = StringField('New Username')
-    email = StringField('New Email', validators=[Email()])
+    email = StringField('New Email', validators=[Optional(), Email()])
     password = PasswordField('New Password')
     password2 = PasswordField("Re-Enter New Password", validators=[EqualTo('password', message='Passwords must match')])
     submit = SubmitField('Update Profile')
