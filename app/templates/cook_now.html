@@ -15,7 +15,7 @@
 <hr>
 
 <!-- Matched Recipes -->
-<h2>Recipes you can cook now:</h2>
+<h3>Recipes you can cook now:</h3>
 {% if matched_recipes %}
 <ul>
     {% for recipe, matched in matched_recipes %}
@@ -31,7 +31,7 @@
 <hr>
 
 <!-- Close Recipes -->
-<h2>Recipes you can almost cook:</h2>
+<h3>Recipes you can almost cook:</h3>
 {% if close_recipes %}
 <ul>
     {% for recipe, matched, missing_ingredients in close_recipes %}
