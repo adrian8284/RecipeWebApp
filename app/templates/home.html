@@ -24,6 +24,23 @@
         </fieldset>
     </form>
 
+    <!-- Display Trending Recipes -->
+    <hr>
+    <h3>Trending Recipes</h3>
+    {% if top_trending %}
+    <ul>
+        {% for recipe in top_trending %}
+        <li>
+            <a href="{{ url_for('show_recipe', integer=recipe.id) }}">{{ recipe.title }}</a>
+            — {{ recipe.views }} view(s)
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No trending recipes yet.</p>
+    {% endif %}
+    <hr>
+    
     <!-- Display Filtered Recipes or All Recipes -->
     {% if filtered_recipes is not none %}
         {% if filtered_recipes %}

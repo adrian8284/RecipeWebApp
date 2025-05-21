@@ -21,6 +21,7 @@ def show_recipes():
 def home():
     users = User.query.all()
     tags = Tag.query.order_by(Tag.name).all()
+    trending_recipes = Recipe.query.order_by(Recipe.views.desc()).limit(5).all()
     selected_tags = []
     filtered_recipes = None
 
@@ -38,7 +39,7 @@ def home():
         else:
             flash('Please select at least one tag.', 'error')
 
-    return render_template("home.html", users=users, tags=tags, selected_tags=selected_tags, filtered_recipes=filtered_recipes)
+    return render_template("home.html", users=users, tags=tags, selected_tags=selected_tags, filtered_recipes=filtered_recipes,trending_recipes=trending_recipes)
 
 @myapp_obj.route("/search", methods=['GET', 'POST'])
 def search():
@@ -66,6 +67,9 @@ def show_recipe(integer):
     recipe = Recipe.query.get_or_404(integer)
     comment_form = CommentForm()
     rating_form = RatingForm()
+
+    recipe.views += 1
+    db.session.commit()
 
     if comment_form.validate_on_submit():
         comment = Comment(

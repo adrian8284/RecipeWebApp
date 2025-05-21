@@ -48,7 +48,8 @@ class Recipe(db.Model):
     description = db.Column(db.Text, nullable=False)
     ingredients = db.Column(db.Text, nullable=False)
     instructions = db.Column(db.Text, nullable=False)
-    date_created = db.Column(db.Date, default=date.today)    
+    date_created = db.Column(db.Date, default=date.today)
+    views = db.Column(db.Integer, default=0)
     # Foreign key to link recipe to user
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), index=True)
 
