@@ -1,5 +1,5 @@
 from app import myapp_obj
-from app.forms import LoginForm, RecipeForm, RegistrationForm, CommentForm, RatingForm
+from app.forms import LoginForm, RecipeForm, RegistrationForm, CommentForm, RatingForm, EditProfileForm
 from app.models import User, Recipe, Comment, Rating, Tag, recipe_tags
 from app import db
 from flask import redirect, render_template, request, flash, url_for
@@ -7,12 +7,13 @@ from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 from urllib.parse import urlsplit
 
-# Shows current user, if logged in, recipes
-@myapp_obj.route("/recipes")
+# If logged in, shows current user's profile information, their recipes and saved recipes
+@myapp_obj.route("/profile")
 @login_required
 def show_recipes():
     recipes = Recipe.query.filter_by(user_id=current_user.id).all()
-    return render_template("all_recipes.html", recipes=recipes)
+    saved_recipes = current_user.saved_recipes
+    return render_template("all_recipes.html", user=current_user, recipes=recipes, saved_recipes = saved_recipes)
 
 # Shows all users and their recipe regardless if logged in or not
 @myapp_obj.route("/")
@@ -87,6 +88,17 @@ def show_recipe(integer):
         db.session.commit()
         flash('Rating submitted!')
         return redirect(url_for('show_recipe', integer=recipe.id))
+    
+    if request.method == "POST" and request.form.get("form_type") == "save_toggle":
+        if recipe in current_user.saved_recipes:
+            current_user.saved_recipes.remove(recipe)
+            flash("Recipe removed from favorites!")
+        else:
+            current_user.saved_recipes.append(recipe)
+            flash("Recipe added to favorites!")
+        db.session.commit()
+        return redirect(url_for('show_recipe', integer=recipe.id))
+
     return render_template("recipe_details.html", recipe=recipe, 
                            comment_form=comment_form, rating_form=rating_form)
 
@@ -193,3 +205,94 @@ def edit_recipe(recipe_id):
         return redirect(url_for("show_recipe", integer=recipe.id))
 
     return render_template("new_recipe.html", form=form, active_page="new_recipe")
+
+# Edit Profile page
+@myapp_obj.route("/edit_profile", methods=["GET", "POST"])
+@login_required
+def edit_profile():
+    form = EditProfileForm()
+
+    if form.validate_on_submit():
+        if form.username.data:
+            current_user.username = form.username.data
+        if form.email.data:
+            current_user.email = form.email.data
+        if form.password.data:
+            current_user.set_password(form.password.data)
+
+        db.session.commit()
+        flash("Your profile has been updated!")
+        return redirect(url_for("show_recipes"))
+
+    return render_template("edit_profile.html", title='Edit Profile', form=form)
+
+# Search for recipes based on available ingredients
+@myapp_obj.route("/cook_now", methods=["GET", "POST"])
+@login_required
+def cook_now():
+    matched_recipes = []
+    close_recipes = []
+    input_ingredients_list = []
+
+    if request.method == "POST":
+        # Get raw input and clean it
+        input_ingredients = request.form.get("ingredients", "").strip().lower()
+        max_missing = request.form.get("max_missing", 3)
+        try:
+            max_missing = int(max_missing)
+        except ValueError:
+            max_missing = 3
+
+        # Parse and clean ingredients list
+        for i in input_ingredients.split(","):
+            clean_i = i.strip()
+            if clean_i:
+                input_ingredients_list.append(clean_i)
+
+        all_recipes = Recipe.query.all()
+
+        # Search through recipes
+        for recipe in all_recipes:
+            # Parse recipe ingredients
+            recipe_ingredients = []
+            for i in recipe.ingredients.splitlines():
+                clean_ingredient = i.strip().lower()
+                if clean_ingredient:
+                    recipe_ingredients.append(clean_ingredient)
+
+            # Find matching & missing ingredients
+            matched = set()
+            missing_ingredients = set()
+
+            for rec_ing in recipe_ingredients:
+                match_found = False
+                for user_ing in input_ingredients_list:
+                    if user_ing in rec_ing:
+                        matched.add(user_ing)
+                        match_found = True
+                        break
+                if not match_found:
+                    missing_ingredients.add(rec_ing)
+
+            matched = list(matched)
+            missing_ingredients = list(missing_ingredients)
+
+            # Sort matched vs close
+            if not missing_ingredients:
+                matched_recipes.append((recipe, matched))
+            elif len(missing_ingredients) <= max_missing:
+                close_recipes.append((recipe, matched, missing_ingredients))
+
+        # Sort close matches by fewest ingredients missing
+        def sort_by_missing(item):
+            recipe, matched, missing = item
+            return len(missing)
+
+        close_recipes.sort(key=sort_by_missing)
+
+    return render_template(
+        "cook_now.html",
+        matched_recipes=matched_recipes,
+        close_recipes=close_recipes,
+        input_ingredients_list=input_ingredients_list
+    )

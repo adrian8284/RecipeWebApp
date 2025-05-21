@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Edit Your Profile</h1>
+
+    <!-- Display current values -->
+    <p><strong>Current Username:</strong> {{ current_user.username }}</p>
+    <p><strong>Current Email:</strong> {{ current_user.email }}</p>
+    <hr>
+    
+    <p>Leave any field blank to keep your current info.</p>
+
+    <form action="" method="POST" novalidate>        
+        {{ form.hidden_tag() }}
+
+        <!-- Username Input Field and Error Handling -->
+        <div style="margin-bottom: 15px;">
+            <br>{{ form.username.label }}<br>
+            {{ form.username(size=32) }}
+            {% for error in form.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+
+        <!-- Email Input Field and Error Handling -->
+        <div style="margin-bottom: 15px;">
+            {{ form.email.label }}<br>
+            {{ form.email(size=64) }}
+            {% for error in form.email.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+
+        <!-- New Password Input Field and Error Handling -->
+        <div style="margin-bottom: 15px;">
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+            {% for error in form.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+
+        <!-- Confirm New Password Input Field and Error Handling -->
+        <div style="margin-bottom: 15px;">
+            {{ form.password2.label }}<br>
+            {{ form.password2(size=32) }}
+            {% for error in form.password2.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+
+        <!-- Submit -->
+        <div>
+            {{ form.submit() }}
+        </div>
+    </form>
+
+    <br>
+    <a href="{{ url_for('show_recipes') }}">← Back to Profile</a>
+{% endblock %}
