@@ -79,6 +79,17 @@
         </form>
     {% endif %}
 
+    <!-- Add to Favorites Form -->
+    <h3>Like it? Add to your favorites!</h3>
+    <form method="POST" style="padding-top: 0; padding-bottom: 0;">
+        <input type="hidden" name="form_type" value="save_toggle">
+        {% if recipe in current_user.saved_recipes %}
+        <button type="submit">Unsave Recipe</button>
+        {% else %}
+        <button type="submit">Save Recipe</button>
+        {% endif %}
+    </form>
+
     <!-- Comment Form -->
     <h3>Post What You Think</h3>
     <form method="POST" novalidate>

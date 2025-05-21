@@ -88,6 +88,17 @@ def show_recipe(integer):
         db.session.commit()
         flash('Rating submitted!')
         return redirect(url_for('show_recipe', integer=recipe.id))
+    
+    if request.method == "POST" and request.form.get("form_type") == "save_toggle":
+        if recipe in current_user.saved_recipes:
+            current_user.saved_recipes.remove(recipe)
+            flash("Recipe removed from favorites!")
+        else:
+            current_user.saved_recipes.append(recipe)
+            flash("Recipe added to favorites!")
+        db.session.commit()
+        return redirect(url_for('show_recipe', integer=recipe.id))
+
     return render_template("recipe_details.html", recipe=recipe, 
                            comment_form=comment_form, rating_form=rating_form)
 
