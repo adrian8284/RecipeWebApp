@@ -7,20 +7,13 @@ from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 from urllib.parse import urlsplit
 
-# Shows current user, if logged in, recipes
-@myapp_obj.route("/recipes")
+# If logged in, shows current user's profile information, their recipes and saved recipes
+@myapp_obj.route("/profile")
 @login_required
 def show_recipes():
     recipes = Recipe.query.filter_by(user_id=current_user.id).all()
-    return render_template("all_recipes.html", user=current_user, recipes=recipes)
-
-# if logged in, shows current user's profile information, their recipes and saved recipes
-@myapp_obj.route("/profile")
-@login_required
-def show_profile():
-    recipes = Recipe.query.filter_by(user_id=current_user.id).all()
     saved_recipes = current_user.saved_recipes
-    return render_template("profile.html", user=current_user, recipes=recipes, saved_recipes = saved_recipes)
+    return render_template("all_recipes.html", user=current_user, recipes=recipes, saved_recipes = saved_recipes)
 
 # Shows all users and their recipe regardless if logged in or not
 @myapp_obj.route("/")
