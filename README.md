@@ -12,6 +12,7 @@
     14. Edit User Profile  
     15. Save Recipe (Favorites)  
     16. Spit Out Recipes Based on Ingredients  
+    18. Trending Now
 
 - **Irving Bautista**
   - Functional Requirements:
@@ -30,7 +31,6 @@
 - **Adrian Agustin** – *UI Lead*
   - Functional Requirements:  
     5. Edit Recipe  
-    18. Trending Now
 
 ## Milestone 2: Setup Instructions
 
