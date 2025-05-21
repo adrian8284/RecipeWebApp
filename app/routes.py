@@ -202,3 +202,74 @@ def edit_profile():
         return redirect(url_for("show_recipes"))
 
     return render_template("edit_profile.html", title='Edit Profile', form=form)
+
+# Search for recipes based on available ingredients
+@myapp_obj.route("/cook_now", methods=["GET", "POST"])
+@login_required
+def cook_now():
+    matched_recipes = []
+    close_recipes = []
+    input_ingredients_list = []
+
+    if request.method == "POST":
+        # Get raw input and clean it
+        input_ingredients = request.form.get("ingredients", "").strip().lower()
+        max_missing = request.form.get("max_missing", 3)
+        try:
+            max_missing = int(max_missing)
+        except ValueError:
+            max_missing = 3
+
+        # Parse and clean ingredients list
+        for i in input_ingredients.split(","):
+            clean_i = i.strip()
+            if clean_i:
+                input_ingredients_list.append(clean_i)
+
+        all_recipes = Recipe.query.all()
+
+        # Search through recipes
+        for recipe in all_recipes:
+            # Parse recipe ingredients
+            recipe_ingredients = []
+            for i in recipe.ingredients.splitlines():
+                clean_ingredient = i.strip().lower()
+                if clean_ingredient:
+                    recipe_ingredients.append(clean_ingredient)
+
+            # Find matching & missing ingredients
+            matched = set()
+            missing_ingredients = set()
+
+            for rec_ing in recipe_ingredients:
+                match_found = False
+                for user_ing in input_ingredients_list:
+                    if user_ing in rec_ing:
+                        matched.add(user_ing)
+                        match_found = True
+                        break
+                if not match_found:
+                    missing_ingredients.add(rec_ing)
+
+            matched = list(matched)
+            missing_ingredients = list(missing_ingredients)
+
+            # Sort matched vs close
+            if not missing_ingredients:
+                matched_recipes.append((recipe, matched))
+            elif len(missing_ingredients) <= max_missing:
+                close_recipes.append((recipe, matched, missing_ingredients))
+
+        # Sort close matches by fewest ingredients missing
+        def sort_by_missing(item):
+            recipe, matched, missing = item
+            return len(missing)
+
+        close_recipes.sort(key=sort_by_missing)
+
+    return render_template(
+        "cook_now.html",
+        matched_recipes=matched_recipes,
+        close_recipes=close_recipes,
+        input_ingredients_list=input_ingredients_list
+    )
