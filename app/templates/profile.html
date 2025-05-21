@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Hey {{ user.username }}!</h2>
+    <p>Here is your profile information:</p>
+    <ul>
+      <li><strong>Username:</strong> {{ user.username }}</li>
+      <li><strong>Email:</strong> {{ user.email }}</li>
+    </ul>
+    <hr> 
+
+    <h2>Your Recipes</h2>
+    {% if recipes %}
+    {% for recipe in recipes %}
+        <div>
+            <ul>
+                <li>
+                    <a href="{{ url_for('show_recipe', integer=recipe.id) }}">{{ recipe.title }}</a>
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
+    {% else %}
+        <p>Oh no! You have not added any recipes</p>
+    {% endif %}
+
+    <hr>
+
+   <h2>Saved Recipes</h2>
+  {% if saved_recipes %}
+    <ul>
+      {% for recipe in saved_recipes %}
+        <li>
+          <a href="{{ url_for('show_recipe', integer=recipe.id) }}">{{ recipe.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>You haven’t saved any recipes yet.</p>
+  {% endif %}
+{% endblock %}
